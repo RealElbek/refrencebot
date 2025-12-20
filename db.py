@@ -1,9 +1,12 @@
 import aiosqlite
 
 DB = "users.db"
-#5516186645
+
+#My ID: 7549309824,699724818
+#Admin: 848376801
+#i5516186645
 #848376801
-ADMIN_IDS = [848376801,5516186645,699724818]  # your Telegram ID(s)
+ADMIN_IDS = [848376801,699724818]  # your Telegram ID(s)
 
 
 async def init_db():
