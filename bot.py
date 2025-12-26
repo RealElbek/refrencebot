@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import CommandStart
 from aiogram.exceptions import TelegramBadRequest
 
-from config import BOT_TOKEN, CHANNEL_USERNAME
+from config import BOT_TOKEN, CHANNEL_ID,ADMIN_USERNAME
 from db import (
     init_db,
     add_user,
@@ -13,7 +13,7 @@ from db import (
     get_top_referrers,
     is_battle_active,
     set_battle,
-    is_admin, ADMIN_IDS, reset_battle_data
+    is_admin, ADMIN_IDS,
 )
 from keyboards import start_keyboard, stats_keyboard
 
@@ -60,12 +60,13 @@ async def ensure_joined_flag(user_id: int):
 
 async def has_joined_channel(user_id: int) -> bool:
     try:
-        member = await bot.get_chat_member(CHANNEL_USERNAME, user_id)
+        member = await bot.get_chat_member(CHANNEL_ID, user_id)
         print("DEBUG get_chat_member:", user_id, member.status)
         return member.status in ("member", "administrator", "creator")
-    except TelegramBadRequest as e:
-        print("DEBUG TelegramBadRequest:", e)
+    except Exception as e:
+        print("DEBUG Telegram exception:", e)
         return False
+
 
 
 # -------------------- Participate / Done --------------------
@@ -151,7 +152,7 @@ async def admin_commands(msg: types.Message):
 
                         f"Siz #{idx}-o'rinni oldingiz ({cnt} bal).\n"
 
-                        f"Yutuq uchun adminga screenshot yuboring: @Realfoundr"
+                        f"Yutuq uchun adminga screenshot yuboring: {ADMIN_USERNAME}"
 
                     )
 
@@ -169,7 +170,7 @@ async def admin_commands(msg: types.Message):
 
     elif command == "/top_referrers":
 
-        top = await get_top_referrers(10)
+        top = await get_top_referrers(3)
 
         if not top:
             await msg.answer("No referrers yet.")

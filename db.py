@@ -1,3 +1,4 @@
+from config import ADMIN_IDS
 import aiosqlite
 
 DB = "users.db"
@@ -6,8 +7,7 @@ DB = "users.db"
 #Admin: 848376801
 #i5516186645
 #848376801
-ADMIN_IDS = [848376801,699724818]  # your Telegram ID(s)
-
+# ADMIN_IDS = [848376801,7549309824]  # your Telegram ID(s)
 
 async def init_db():
     async with aiosqlite.connect(DB) as db:
@@ -89,7 +89,7 @@ async def reset_battle_data():
 
 
 
-async def get_top_referrers(limit=10):
+async def get_top_referrers(limit=3):
     async with aiosqlite.connect(DB) as db:
         cur = await db.execute("""
         SELECT u.referrer_id,
